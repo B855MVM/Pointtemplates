@@ -1,0 +1,418 @@
+
+// pointtemplate that changes to vanilla & gray bot models depending on team
+// currently requires cond 65
+// can be modified in any way
+
+seggs
+{
+	PointTemplates
+	{
+		modelmanager
+		{
+			NoFixup 1
+			filter_tf_class
+			{
+				"targetname" "filter_scout"
+				"tfclass" "1"
+			}
+			filter_tf_class
+			{
+				"targetname" "filter_soldier"
+				"tfclass" "3"
+			}
+			filter_tf_class
+			{
+				"targetname" "filter_pyro"
+				"tfclass" "7"
+			}
+			filter_tf_class
+			{
+				"targetname" "filter_demo"
+				"tfclass" "4"
+			}
+			filter_tf_class
+			{
+				"targetname" "filter_heavy"
+				"tfclass" "6"
+			}
+			filter_tf_class
+			{
+				"targetname" "filter_engi"
+				"tfclass" "9"
+			}
+			filter_tf_class
+			{
+				"targetname" "filter_medic"
+				"tfclass" "5"
+			}
+			$filter_sendprop //filter_tf_class didnt work < me before i found out what was the issue with it not working on sniper
+			{
+				"targetname" "filter_sniper"
+				"$name" "m_iClass"
+				"$value" "2"
+			}
+			filter_tf_class
+			{
+				"targetname" "filter_spy"
+				"tfclass" "8"
+			}
+			$filter_sendprop
+			{
+				"targetname" "filter_giant"
+				"$name" "m_bIsMiniBoss"
+				"$value" "1"
+			}
+			$filter_sendprop
+			{
+				"targetname" "filter_notgiant"
+				"$name" "m_bIsMiniBoss"
+				"$value" "0"
+			}
+			$filter_sendprop
+			{
+				"targetname" "filter_grayteam"
+				"$name" "m_iTeamNum"
+				"$value" "1"
+			}
+			$filter_sendprop
+			{
+				"targetname" "filter_notgrayteam"
+				"$name" "m_iTeamNum"
+				"$value" "1"
+				"$compare" "greater than"
+			}
+			filter_tf_condition
+			{
+				"targetname" "filter_addcond65"
+				"condition" "65"
+				"negated" "0"
+			}
+			
+			trigger_multiple
+			{
+				"targetname" "modelmanager_trigger"
+				"origin" "0 0 0"
+				"mins" "-9999 -9999 -9999"
+				"maxs" "9999 9999 9999"
+				"filtername" "filter_modelchange"
+				"spawnflags" "1"
+				
+				"onstarttouch" "filter_vanilla_normal_scout,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_normal_scout,testactivator,0,0,-1"
+				"onstarttouch" "filter_vanilla_giant_scout,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_giant_scout,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_normal_soldier,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_normal_soldier,testactivator,0,0,-1"
+				"onstarttouch" "filter_vanilla_giant_soldier,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_giant_soldier,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_normal_pyro,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_normal_pyro,testactivator,0,0,-1"
+				"onstarttouch" "filter_vanilla_giant_pyro,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_giant_pyro,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_normal_demo,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_normal_demo,testactivator,0,0,-1"
+				"onstarttouch" "filter_vanilla_giant_demo,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_giant_demo,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_normal_hwg,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_normal_hwg,testactivator,0,0,-1"
+				"onstarttouch" "filter_vanilla_giant_hwg,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_giant_hwg,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_engi,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_engi,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_medic,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_medic,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_spy,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_spy,testactivator,0,0,-1"
+				
+				"onstarttouch" "filter_vanilla_sniper,testactivator,0,0,-1"
+				"onstarttouch" "filter_gray_sniper,testactivator,0,0,-1"
+				
+				"onstarttouch" "!self,disable,0,0,-1"
+				"onstarttouch" "!self,enable,0,0.01,-1"
+			}
+			
+			filter_multi
+			{
+				"targetname" "filter_vanilla_normal_scout"
+				"filtermode" "0"
+				"filter01" "filter_scout"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/scout/bot_scout.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_normal_soldier"
+				"filtermode" "0"
+				"filter01" "filter_soldier"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/soldier/bot_soldier.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_normal_pyro"
+				"filtermode" "0"
+				"filter01" "filter_pyro"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/pyro/bot_pyro.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_normal_demo"
+				"filtermode" "0"
+				"filter01" "filter_demo"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/demo/bot_demo.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_normal_hwg"
+				"filtermode" "0"
+				"filter01" "filter_heavy"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/heavy/bot_heavy.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_engi"
+				"filtermode" "0"
+				"filter01" "filter_engi"
+				"filter02" "filter_notgrayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/engineer/bot_engineer.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_medic"
+				"filtermode" "0"
+				"filter01" "filter_medic"
+				"filter02" "filter_notgrayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/medic/bot_medic.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_sniper"
+				"filtermode" "0"
+				"filter01" "filter_sniper"
+				"filter02" "filter_notgrayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/sniper/bot_sniper.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_spy"
+				"filtermode" "0"
+				"filter01" "filter_spy"
+				"filter02" "filter_notgrayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/spy/bot_spy.mdl"
+			}
+			
+			filter_multi
+			{
+				"targetname" "filter_gray_normal_scout"
+				"filtermode" "0"
+				"filter01" "filter_scout"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/scout/bot_scout_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_normal_soldier"
+				"filtermode" "0"
+				"filter01" "filter_soldier"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/soldier/bot_soldier_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_normal_pyro"
+				"filtermode" "0"
+				"filter01" "filter_pyro"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/pyro/bot_pyro_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_normal_demo"
+				"filtermode" "0"
+				"filter01" "filter_demo"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/demo/bot_demo_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_normal_hwg"
+				"filtermode" "0"
+				"filter01" "filter_heavy"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_notgiant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/heavy/bot_heavy_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_engi"
+				"filtermode" "0"
+				"filter01" "filter_engi"
+				"filter02" "filter_grayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/engineer/bot_engineer_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_medic"
+				"filtermode" "0"
+				"filter01" "filter_medic"
+				"filter02" "filter_grayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/medic/bot_medic_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_sniper"
+				"filtermode" "0"
+				"filter01" "filter_sniper"
+				"filter02" "filter_grayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/sniper/bot_sniper_gray.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_spy"
+				"filtermode" "0"
+				"filter01" "filter_spy"
+				"filter02" "filter_grayteam"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/spy/bot_spy_gray.mdl"
+			}
+			
+			filter_multi
+			{
+				"targetname" "filter_vanilla_giant_scout"
+				"filtermode" "0"
+				"filter01" "filter_scout"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/scout_boss/bot_scout_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_giant_soldier"
+				"filtermode" "0"
+				"filter01" "filter_soldier"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/soldier_boss/bot_soldier_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_giant_pyro"
+				"filtermode" "0"
+				"filter01" "filter_pyro"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/pyro_boss/bot_pyro_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_giant_demo"
+				"filtermode" "0"
+				"filter01" "filter_demo"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/demo_boss/bot_demo_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_vanilla_giant_hwg"
+				"filtermode" "0"
+				"filter01" "filter_heavy"
+				"filter02" "filter_notgrayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/heavy_boss/bot_heavy_boss.mdl"
+			}
+			
+			filter_multi
+			{
+				"targetname" "filter_gray_giant_scout"
+				"filtermode" "0"
+				"filter01" "filter_scout"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/scout_boss/bot_scout_gray_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_giant_soldier"
+				"filtermode" "0"
+				"filter01" "filter_soldier"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/soldier_boss/bot_soldier_gray_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_giant_pyro"
+				"filtermode" "0"
+				"filter01" "filter_pyro"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/pyro_boss/bot_pyro_gray_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_giant_demo"
+				"filtermode" "0"
+				"filter01" "filter_demo"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/demo_boss/bot_demo_gray_boss.mdl"
+			}
+			filter_multi
+			{
+				"targetname" "filter_gray_giant_hwg"
+				"filtermode" "0"
+				"filter01" "filter_heavy"
+				"filter02" "filter_grayteam"
+				"filter03" "filter_giant"
+				"filter04" "filter_addcond65"
+				"onpass" "!activator,setcustommodel,models/bots/heavy_boss/bot_heavy_gray_boss.mdl"
+			}
+		}
+	}
+}

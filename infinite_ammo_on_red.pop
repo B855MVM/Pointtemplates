@@ -1,0 +1,23 @@
+
+//bite-sized pt that gives infinite ammo to red team
+//instead of player, you can use !activator if you want to restrict it to specific classes
+
+seggs
+{
+	PointTemplates
+	{
+		infiniteammo_red
+		{
+			NoFixup 1
+			logic_timer
+			{
+				"targetname" "ammoregen_timer"
+				"refiretime" "0.01"
+				"ontimer" "player,$setprop$m_iAmmo$0,1337,-1"
+				"ontimer" "player,$setprop$m_iAmmo$1,1337,0,-1"
+				"ontimer" "player,$setprop$m_iAmmo$2,1337,0,-1"
+				"ontimer" "player,$setprop$m_iAmmo$3,1337-,1,0,-1"
+			}
+		}
+	}
+}

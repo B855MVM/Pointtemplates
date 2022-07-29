@@ -17,6 +17,8 @@ seggs
 				"targetname" "failsafes"
 				"onspawn" "player,addoutput,targetname player_ents,0,-1"
 				"onspawn" "gethp_timer,disable,0,0,-1"
+				"onspawn" "player,$setprop$m_bUseBossHealthBar,0,0,-1"
+				"onspawn" "player,$displaytextcenter,,0,-1"
 			}
 			logic_timer
 			{
@@ -66,5 +68,4 @@ seggs
 			}
 		}
 	}
-	SpawnTemplate "healthbar_numbers"
 }

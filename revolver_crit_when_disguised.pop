@@ -1,0 +1,42 @@
+// a pt that took me embarassingly long to create without any bugs
+// use this with PlayerItemEquipSpawnTemplate to make spy's revolver crit when disguised
+// can be modified to achieve certain other effects
+// also thanks royal
+seggs
+{
+	PointTemplates
+	{
+		revolver_disguise_crit
+		{
+			OnSpawnOutput
+			{
+				Target looper
+				Action Trigger
+				Delay 0.6
+			}
+			filter_tf_condition
+			{
+				"targetname" "filter_disguised"
+				"condition" "3"
+				"negated" "0"
+				"onpass" "!parent,$additemattribute,add cond when active|56|1,0,-1"
+			}
+			filter_tf_condition
+			{
+				"targetname" "filter_notdisguised"
+				"condition" "3"
+				"negated" "1"
+				"onpass" "!parent,$removeitemattribute,add cond when active|1,0,-1"
+				"onpass" "!parent,$removecond,56,0,-1"
+			}
+			logic_relay
+			{
+				"targetname" "looper"
+				"ontrigger" "filter_disguised,$testentity,!activator,0,-1"
+				"ontrigger" "filter_notdisguised,$testentity,!activator,0,-1"
+				"ontrigger" "!self,trigger,0,0.02,-1"
+				"spawnflags" "2"
+			}
+		}
+	}
+}

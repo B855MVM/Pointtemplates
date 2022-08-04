@@ -1,0 +1,41 @@
+
+// an another tiny pt
+// this one allows you to disguise as a gray bot by selecting red team on the disguise kit
+// because red disguise are useless in mvm outside of revs lol
+// change the sendprop filter value to 3 if you need to use this for a rev
+
+seggs
+{
+	PointTemplates
+	{
+		graybot_disguise
+		{
+			OnSpawnOutput
+			{
+				Target disguise_looper
+				Action Trigger
+				Delay 0.1
+			}
+			logic_relay
+			{
+				"targetname" "disguise_looper"
+				"ontrigger" "crashfix,$testentity,!parent,0,-1"
+				"ontrigger" "!self,trigger,0,0.05,-1"
+				"spawnflags" "2"
+			}
+			filter_multi
+			{
+				"targetname" "crashfix"
+				"filter01" "filter_disguisedasred"
+				"filtermode" "0"
+				"onpass" "!parent,$setprop$m_nDisguiseTeam,1,0,-1"
+			}
+			$filter_sendprop
+			{
+				"targetname" "filter_disguisedasred"
+				"$name" "m_nDisguiseTeam"
+				"$value" "2"
+			}
+		}
+	}
+}

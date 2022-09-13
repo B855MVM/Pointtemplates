@@ -1,0 +1,63 @@
+// does an effect if your active weapon is a certain class
+// can achieve stuff like disallowing spy from picking up the flag with a knife out or making add cond when active not stutter
+// this example showcases adding cond 36 when your active weapons class is tf_weapon_rocketlauncher_directhit and removing cond 36 when its not
+// because using add cond when active will sometimes inconsistently remove the cond for a split second and re-add it, cond 36 plays a speed boost sound every time its added // it becomes annoying fast
+
+WaveSchedule
+{
+	PointTemplates
+	{
+		example_addcondwhenactive
+		{
+			logic_relay
+			{
+				"targetname" "weaponcheck_looper"
+				"ontrigger" "!self,trigger,0,0.05,-1"
+				"ontrigger" "filter_directhit,$testentity,@e@m_hActiveWeapon@!parent,0,-1"
+				"ontrigger" "filter_notdirecthit,$testentity,@e@m_hActiveWeapon@!parent,0,-1"
+				"spawnflags" "2"
+				"onspawn" "!self,trigger,0,0.3,-1"
+			}
+			filter_activator_class
+			{
+				"targetname" "filter_directhit"
+				"filterclass" "tf_weapon_rocketlauncher_directhit"
+				"negated" "0"
+				"onpass" "!parent,$addcond,36 0.5,0,-1"
+			}
+			filter_activator_class
+			{
+				"targetname" "filter_notdirecthit"
+				"filterclass" "tf_weapon_rocketlauncher_directhit"
+				"negated" "1"
+				"onpass" "!parent,$removecond,36,0,-1"
+			}
+		}
+		example_nobombpickup
+		{
+			logic_relay
+			{
+				"targetname" "weaponcheck_looper"
+				"ontrigger" "!self,trigger,0,0.05,-1"
+				"ontrigger" "filter_knife,$testentity,@e@m_hActiveWeapon@!parent,0,-1"
+				"ontrigger" "filter_notknife,$testentity,@e@m_hActiveWeapon@!parent,0,-1"
+				"spawnflags" "2"
+				"onspawn" "!self,trigger,0,0.3,-1"
+			}
+			filter_activator_class
+			{
+				"targetname" "filter_knife"
+				"filterclass" "tf_weapon_knife"
+				"negated" "0"
+				"onpass" "!parent,$addplayerattribute,cannot pick up intelligence|1,0,-1"
+			}
+			filter_activator_class
+			{
+				"targetname" "filter_notknife"
+				"filterclass" "tf_weapon_knife"
+				"negated" "1"
+				"onpass" "!parent,$removeplayerattribute,cannot pick up intelligence,0,-1"
+			}
+		}
+	}
+}

@@ -1,0 +1,54 @@
+// pointtemplate that allows you to switch class mid wave with a sourcemod menu by pressing action key
+// make sure to blacklist all action slot items
+
+WaveSchedule
+{
+	PointTemplates
+	{
+		switchclass
+		{
+			NoFixup 1
+			logic_case
+			{
+				"targetname" "class_menu"
+				"case16" "Pick your class|0|Cancel"
+				"case01" "Scout"
+				"oncase01" "!activator,$switchclass,1,0,-1"
+				"case02" "Soldier"
+				"oncase02" "!activator,$switchclass,3,0,-1"
+				"case03" "Pyro"
+				"oncase03" "!activator,$switchclass,7,0,-1"
+				"case04" "Demoman"
+				"oncase04" "!activator,$switchclass,4,0,-1"
+				"case05" "Heavy"
+				"oncase05" "!activator,$switchclass,6,0,-1"
+				"case06" "Engineer"
+				"oncase06" "!activator,$switchclass,9,0,-1"
+				"case07" "Medic"
+				"oncase07" "!activator,$switchclass,5,0,-1"
+				"case08" "Sniper"
+				"oncase08" "!activator,$switchclass,2,0,-1"
+				"case09" "Spy"
+				"oncase09" "!activator,$switchclass,8,0,-1"
+			}
+		}
+		switchclass_player //use with playerspawntemplate
+		{
+			logic_relay
+			{
+				"targetname" "actionslot_checker"
+				"ontrigger" "!self,trigger,0,0.02,-1"
+				"ontrigger" "filter_holdingactionkey,$testentity,!parent,0,-1"
+				"onspawn" "!self,trigger,0,0.1,-1"
+				"spawnflags" "2"
+			}
+			$filter_sendprop
+			{
+				"targetname" "filter_holdingactionkey"
+				"$name" "m_bUsingActionSlot"
+				"$value" "1"
+				"onpass" "class_menu,$displaymenu,!parent,0,-1"
+			}
+		}
+	}
+}
